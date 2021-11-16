@@ -2,6 +2,8 @@ import cv2
 
 # Load the cascade
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+#https://github.com/Itseez/opencv/blob/master/data/haarcascades/haarcascade_eye.xml
+eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
 
 # To capture video from webcam. 
 cap = cv2.VideoCapture(0)
@@ -19,9 +21,8 @@ while True:
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # Detect the faces
     faces = face_cascade.detectMultiScale(gray, 1.1, 4)
-    # Draw the rectangle around each face
 
-    # print(type(faces))
+    ####### Draw on each face #######
 
     for (x, y, w, h) in faces:
 
@@ -32,13 +33,21 @@ while True:
         dim = (w,h)
         resized = cv2.resize(emoji, dim)
 
-        # print(resized.shape)
-        # (resized_height, resized_width)=resized.shape
 
         # show face in square
         cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
 
-        # put emoji on face
+        
+        ##### find eyes #####
+
+        roi_gray = gray[y:y+h, x:x+w]
+        roi_color = img[y:y+h, x:x+w]
+       
+        eyes = eye_cascade.detectMultiScale(roi_gray)
+        for (ex,ey,ew,eh) in eyes:
+            cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
+
+        ####### put emoji on face #######
 
         print(img[x:x+w, y:y+h,:].shape)
         print(resized[0:w,0:h,:].shape)
@@ -50,10 +59,9 @@ while True:
             print(faces)
             print("Face detected")
             added_img = cv2.addWeighted(img[x:x+w, y:y+h,:], 0, resized[0:w,0:h,:], 1, 0)
-            # added_img = cv2.addWeighted(img[y:y+h, x:x+w,:], 0, resized[0:h,0:w,:], 1, 0)
-            # added_img = cv2.addWeighted(img[x:x+h, y:y+w,:], 0, resized[0:h,0:w,:], 1, 0)
 
-        #     # print(added_img.shape)
+
+        
             
             img[y:y+h, x:x+w,:] = added_img
 
