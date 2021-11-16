@@ -30,22 +30,26 @@ while True:
         dim = (w,h)
         resized = cv2.resize(emoji, dim)
         print(resized.shape)
-        (resized_height, resized_width)=resized.shape
+        # (resized_height, resized_width)=resized.shape
 
         # show face in square
         cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
 
         # put emoji on face
-        
+
+        added_img = cv2.addWeighted(img[x:x+w, y:y+h,:], 0, resized[0:w,0:h,:], 1, 0)
+
+        img[x:x+w, y:y+h,:] = added_img
+
 
         
-
-        
-
 
     # Display
 
     cv2.imshow('img', img)
+
+    # cv2.imshow('new_img', new_img)
+
     # Stop if escape key is pressed
     k = cv2.waitKey(30) & 0xff
     if k==27:
