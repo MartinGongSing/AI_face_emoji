@@ -21,15 +21,18 @@ while True:
     faces = face_cascade.detectMultiScale(gray, 1.1, 4)
     # Draw the rectangle around each face
 
-    
+    # print(type(faces))
 
     for (x, y, w, h) in faces:
 
+        w1 = w/2
+        h1 = h/2
         # size emoji 
 
         dim = (w,h)
         resized = cv2.resize(emoji, dim)
-        print(resized.shape)
+
+        # print(resized.shape)
         # (resized_height, resized_width)=resized.shape
 
         # show face in square
@@ -37,9 +40,22 @@ while True:
 
         # put emoji on face
 
-        added_img = cv2.addWeighted(img[x:x+w, y:y+h,:], 0, resized[0:w,0:h,:], 1, 0)
+        print(img[x:x+w, y:y+h,:].shape)
+        print(resized[0:w,0:h,:].shape)
 
-        img[x:x+w, y:y+h,:] = added_img
+        if img[x:x+w, y:y+h,:].shape !=  resized[0:w,0:h,:].shape: 
+            added_img = img
+            print("Face not detected")
+        else : 
+            print(faces)
+            print("Face detected")
+            added_img = cv2.addWeighted(img[x:x+w, y:y+h,:], 0, resized[0:w,0:h,:], 1, 0)
+            # added_img = cv2.addWeighted(img[y:y+h, x:x+w,:], 0, resized[0:h,0:w,:], 1, 0)
+            # added_img = cv2.addWeighted(img[x:x+h, y:y+w,:], 0, resized[0:h,0:w,:], 1, 0)
+
+        #     # print(added_img.shape)
+            
+            img[y:y+h, x:x+w,:] = added_img
 
 
         
