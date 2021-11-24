@@ -10,10 +10,10 @@ cap = cv2.VideoCapture(0)
 # To use a video file as input 
 # cap = cv2.VideoCapture('filename.mp4')
 
-drop = cv2.imread("drop.jpg") #drop
-wink = cv2.imread("wink.png") #wink
-right = cv2.imread("right.png") #right
-left = cv2.imread("left.png") #right
+drop = cv2.imread("emoji\drop.jpg") #drop
+wink = cv2.imread("emoji\wink.png") #wink
+right = cv2.imread("emoji\right.png") #right
+left = cv2.imread("emoji\left.png") #right
 
 
 previous_ey = 0 ## trying to change emoji based on eye hight
@@ -32,9 +32,6 @@ while True:
 
     for (x, y, w, h) in faces:
 
-       
-
-        
 
 
         # show face in square
@@ -49,26 +46,14 @@ while True:
         eyes = eye_cascade.detectMultiScale(roi_gray)
         emoji = drop
 
-
-        
-       
-
         for (ex,ey,ew,eh) in eyes:
             cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
-
             eye_c = ey + eh/2
-
 
             # trying to change emoji based on eye hight
             if (previous_ey - 0.5) <= eye_c <= (previous_ey + 0.5) : 
                 emoji = wink
                 print ("wink")
-
-            # if (previous_ey + 0.5) <= eye_c:
-            #     emoji = right
-
-            # elif eye_c <= (previous_ey - 0.5):
-            #     emoji = left
 
 
             else :
