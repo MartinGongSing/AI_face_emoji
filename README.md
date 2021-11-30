@@ -8,7 +8,8 @@ They are 3 steps in this project :
 
 * **Step #1**: Facial detection - Identify the face in the image.
 * **Step #2**: Facial recognition - Detect the key facial structures from the face.
-* **Step #3**: Emotion detection - Convert facial features to a real-time emoji.
+* **Step #3**: Emotion detection - Convert facial features to an emotion
+* **Step #4**: Emoji placement - Place in real-time the emoji corresponding to the emotion.
 
 
 ## 1: Facial detection.
@@ -18,3 +19,5 @@ They are 3 steps in this project :
 
 
 ## 3: Emotion detection
+
+## 4: Emoji placement
