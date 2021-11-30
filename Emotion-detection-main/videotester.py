@@ -22,7 +22,7 @@ cap = cv2.VideoCapture(0)
 # load emoji
 angry    = cv2.imread("../emoji/angry.png")
 disgust  = cv2.imread("../emoji/disgust.png")
-fear     = cv2.imread("../emoji/fear.png", cv2.IMREAD_UNCHANGED)
+fear     = cv2.imread("../emoji/fear.png")
 happy    = cv2.imread("../emoji/happy.png")
 sad      = cv2.imread("../emoji/sad.png")
 surprise = cv2.imread("../emoji/surprised.png")
@@ -33,6 +33,11 @@ mask     = cv2.imread("../emoji/mask.png")
 
 
 while True:
+
+    # wait 1 sec before restarting the loop, to prevent the blink of the emoji
+    #TODO
+
+    
     ret, test_img = cap.read()  # captures frame and returns boolean value and captured image
     if not ret:
         continue
