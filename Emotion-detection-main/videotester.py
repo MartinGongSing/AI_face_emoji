@@ -15,6 +15,11 @@ model = load_model("best_model.h5") # --> https://www.youtube.com/watch?v=G1Uhs6
 # find face 
 face_haar_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
+
+#find eyes
+eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
+
+
 #open camera
 cap = cv2.VideoCapture(0)
 
@@ -30,7 +35,7 @@ neutral  = cv2.imread("../emoji/neutral.png")
 mask     = cv2.imread("../emoji/mask.png")
 
 
-
+previous_eye = 0 # trying to change emoji based on eye hight
 
 while True:
 
@@ -66,13 +71,38 @@ while True:
 
         #list of available emotions
         emotions = ('angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutral')
-        #gives the name to the emotion
+        #saves the emotion's name
         predicted_emotion = emotions[max_index]
 
         #puts text on top of square arround face
         cv2.putText(test_img, predicted_emotion, (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
         # print(predicted_emotion)
+
+        ##############################
+        ###### ORIENTATION HEAD ######
+        ##############################
+        # trying to change emoji based on eye hight
+        eyes = eye_cascade.detectMultiScale(roi_gray)
+
+        for (ex,ey,ew,eh) in eyes:
+            cv2.rectangle(test_img,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
+            eye_c = ey + eh/2
+
+            # trying to change emoji based on eye hight
+            if (previous_eye - 0.5) <= eye_c <= (previous_eye + 0.5) : 
+                # emoji = wink
+                print ("straight")
+
+
+            else :
+                # emoji = drop
+                print("tilted")
+            
+            print(previous_eye, "\n", eye_c)
+
+
+        previous_eye = eye_c 
 
         #################################
         ####### put emoji on face #######
