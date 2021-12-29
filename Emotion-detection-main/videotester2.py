@@ -38,7 +38,7 @@ left     = cv2.imread("../emoji/left.png")
 right     = cv2.imread("../emoji/right.png")
 
 
-# previous_eye = 0 # trying to change emoji based on eye hight
+previous_eye = 0 # trying to change emoji based on eye hight
 
 while True:
 
@@ -88,67 +88,91 @@ while True:
         ##############################
         ###### ORIENTATION HEAD ######
         ##############################
-        # # trying to change emoji based on eye hight
-        # eyes = eye_cascade.detectMultiScale(roi_gray)
+        # trying to change emoji based on eye hight
+        eyes = eye_cascade.detectMultiScale(roi_gray)
 
-        # for (ex,ey,ew,eh) in eyes:
-        #     cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
-        #     eye_c = ey + eh/2
+        for (ex,ey,ew,eh) in eyes:
+            cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
+            eye_c = ey + eh/2
 
-        #     # trying to change emoji based on eye hight
-        #     if (previous_eye - 0.5) <= eye_c <= (previous_eye + 0.5) : 
-        #         # emoji = wink
-        #         print ("straight")
+            angle = 0.8
+
+            # trying to change emoji based on eye hight
+            if (previous_eye - angle) <= eye_c <= (previous_eye + angle) : 
+                # emoji = wink
+                print ("straight")
+
+################################################################
 
 
 
 
-        #     elif eye_c < (previous_eye-0.5) :
-        #         print ("llllllllllllllleft")
-        #         emoji = left
+
+                #################################
+                ####### put emoji on face #######
+                #################################
+                
+                #if nothing
+                emoji = neutral
+                #if emotion detected
+
+
+                # if emotion2 == 'masked' : 
+                #     emoji = mask
+                # else : 
+
+
+                if predicted_emotion == 'angry':
+                    emoji = angry
+                elif predicted_emotion == 'disgust':
+                    emoji = disgust
+                elif predicted_emotion == 'fear':
+                    emoji = fear
+                elif predicted_emotion == 'happy':
+                    emoji = happy
+                elif predicted_emotion == 'neutral':
+                    emoji = neutral
+                elif predicted_emotion == 'sad':
+                    emoji = sad
+                elif predicted_emotion == 'surprise':
+                    emoji = surprise
+                else :
+                    emoji = mask
+
+
+
+
+
+
+
+
+################################################################
+
+
+
+            elif eye_c < (previous_eye - angle) :
+                print ("llllllllllllllleft")
+                emoji = left
+                time.sleep(0.2)
             
-        #     elif (previous_eye + 0.5) < eye_c:
-        #         print("mmmmmmmmmmmRIGHT")
-        #         emoji = right
-        #     else :
-        #         # emoji = drop
-        #         print("tilted")
+            elif (previous_eye + angle) < eye_c:
+                print("mmmmmmmmmmmRIGHT")
+                emoji = right
+                time.sleep(0.2)
+            else :
+                # emoji = drop
+                print("tilted")
             
-        #     # print(previous_eye, "\n", eye_c)
+            # print(previous_eye, "\n", eye_c)
 
 
-        # previous_eye = eye_c 
-
-        #################################
-        ####### put emoji on face #######
-        #################################
-        
-        #if nothing
-        emoji = neutral
-        #if emotion detected
+        previous_eye = eye_c 
 
 
-        # if emotion2 == 'masked' : 
-        #     emoji = mask
-        # else : 
+
+##########################################
 
 
-        if predicted_emotion == 'angry':
-            emoji = angry
-        elif predicted_emotion == 'disgust':
-            emoji = disgust
-        elif predicted_emotion == 'fear':
-            emoji = fear
-        elif predicted_emotion == 'happy':
-            emoji = happy
-        elif predicted_emotion == 'neutral':
-            emoji = neutral
-        elif predicted_emotion == 'sad':
-            emoji = sad
-        elif predicted_emotion == 'surprise':
-            emoji = surprise
-        else :
-            emoji = mask
 
         # size emoji 
         # w1 = w/2
@@ -172,7 +196,7 @@ while True:
             #right axis + add of images
 
 ######################################################################################
-            test_img[y:y+h, x:x+w,:] = added_img         # Comment this to remove the emoji
+            # test_img[y:y+h, x:x+w,:] = added_img         # Comment this to remove the emoji
 
         #################################
         #################################
