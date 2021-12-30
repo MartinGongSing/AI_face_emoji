@@ -16,11 +16,6 @@ model = load_model("best_model.h5") # --> https://www.youtube.com/watch?v=G1Uhs6
 # find face 
 face_haar_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-
-#find eyes
-eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
-
-
 #open camera
 cap = cv2.VideoCapture(0)
 
@@ -65,12 +60,8 @@ while True:
         img_pixels = np.expand_dims(img_pixels, axis=0)
         img_pixels /= 255
 
-
-        roi_color = test_img[y:y+h, x:x+w]
-
         # based on model(.h5) predicts in list the emotion catured on face
         predictions = model.predict(img_pixels)
-
 
         # find max indexed array -> most suitable
         max_index = np.argmax(predictions[0])
@@ -83,41 +74,6 @@ while True:
         #puts text on top of square arround face
         cv2.putText(test_img, predicted_emotion, (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
-        # print(predicted_emotion)
-
-        ##############################
-        ###### ORIENTATION HEAD ######
-        ##############################
-        # # trying to change emoji based on eye hight
-        # eyes = eye_cascade.detectMultiScale(roi_gray)
-
-        # for (ex,ey,ew,eh) in eyes:
-        #     cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
-        #     eye_c = ey + eh/2
-
-        #     # trying to change emoji based on eye hight
-        #     if (previous_eye - 0.5) <= eye_c <= (previous_eye + 0.5) : 
-        #         # emoji = wink
-        #         print ("straight")
-
-
-
-
-        #     elif eye_c < (previous_eye-0.5) :
-        #         print ("llllllllllllllleft")
-        #         emoji = left
-            
-        #     elif (previous_eye + 0.5) < eye_c:
-        #         print("mmmmmmmmmmmRIGHT")
-        #         emoji = right
-        #     else :
-        #         # emoji = drop
-        #         print("tilted")
-            
-        #     # print(previous_eye, "\n", eye_c)
-
-
-        # previous_eye = eye_c 
 
         #################################
         ####### put emoji on face #######
@@ -150,9 +106,7 @@ while True:
         else :
             emoji = mask
 
-        # size emoji 
-        # w1 = w/2
-        # h1 = h/2
+
 
         dim = (w,h)
         resized = cv2.resize(emoji, dim)
@@ -160,7 +114,7 @@ while True:
         #test_img : the one captured by camera
 
         #if : if no faces are detected or if dim did not work -> do nothing
-        #ellse : if faces are detected -> addWeighted : superpose emoji + camera
+        #else : if faces are detected -> addWeighted : superpose emoji + camera
 
         if test_img[x:x+w, y:y+h,:].shape !=  resized[0:w,0:h,:].shape: 
             added_img = test_img
@@ -171,12 +125,10 @@ while True:
 
             #right axis + add of images
 
-######################################################################################
+##############################################################################################
             test_img[y:y+h, x:x+w,:] = added_img         # Comment this to remove the emoji
+##############################################################################################
 
-        #################################
-        #################################
-        #################################
 
 
 

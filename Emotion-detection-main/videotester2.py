@@ -151,12 +151,12 @@ while True:
 
 
             elif eye_c < (previous_eye - angle) :
-                print ("llllllllllllllleft")
+                # print ("llllllllllllllleft")
                 emoji = left
                 time.sleep(0.2)
             
             elif (previous_eye + angle) < eye_c:
-                print("mmmmmmmmmmmRIGHT")
+                # print("mmmmmmmmmmmRIGHT")
                 emoji = right
                 time.sleep(0.2)
             else :
