@@ -7,8 +7,8 @@ warnings.filterwarnings("ignore")
 from keras.preprocessing.image import load_img, img_to_array 
 from keras.models import  load_model
 import matplotlib.pyplot as plt
-import numpy as np
 import time
+
 
 # load model
 model = load_model("best_model.h5") # --> https://www.youtube.com/watch?v=G1Uhs6NVi-M   8'45
@@ -30,7 +30,7 @@ surprise = cv2.imread("../emoji/surprised.png")
 neutral  = cv2.imread("../emoji/neutral.png")
 mask     = cv2.imread("../emoji/mask.png")
 left     = cv2.imread("../emoji/left.png")
-right     = cv2.imread("../emoji/right.png")
+right    = cv2.imread("../emoji/right.png")
 
 
 # previous_eye = 0 # trying to change emoji based on eye hight

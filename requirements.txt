@@ -1,0 +1,8 @@
+opencv-python 
+numpy
+bottle
+keras
+tensorflow
+matplotlib
+pandas
+bottle
