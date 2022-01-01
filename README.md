@@ -21,3 +21,8 @@ The main file is "Emotion-detection-main\videotester.py".
 * Run the code 
 ``` python .\videotester.py``` 
 * Quit the window by pressing "q" on the keyboard
+
+## On a phone !
+1. Run "phone.py" on your computer
+2. Go on your phone, connected on the same weetwork, and in a browser type in your IP address of your computer + ":8082"
+3. Upload a picture and see the result ! 
