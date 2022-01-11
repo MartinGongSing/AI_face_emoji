@@ -13,7 +13,7 @@ import time
 # load model
 model = load_model("best_model.h5") # --> https://www.youtube.com/watch?v=G1Uhs6NVi-M   8'45
 
-# find face 
+# find face fonction
 face_haar_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
 #open camera
@@ -115,7 +115,8 @@ while True:
 
         #if : if no faces are detected or if dim did not work -> do nothing
         #else : if faces are detected -> addWeighted : superpose emoji + camera
-
+        # print(resized[0:w,0:h,:].shape)
+        # print(test_img[x:x+w, y:y+h,:].shape)
         if test_img[x:x+w, y:y+h,:].shape !=  resized[0:w,0:h,:].shape: 
             added_img = test_img
             # print("Face not detected")

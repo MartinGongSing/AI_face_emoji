@@ -8,6 +8,7 @@ from keras.preprocessing.image import load_img, img_to_array
 from keras.models import  load_model
 import matplotlib.pyplot as plt
 import time
+import uuid
 
 
 
@@ -197,9 +198,14 @@ def upload():
         return 'File extension not allowed.'
 
     upload.save('./tpm') # appends upload.filename automatically
-    pathtofile='./tpm'+ upload.filename
+
+    id = uuid.uuid1()
+    print(id)
+    os.rename('./tpm/' + upload.filename, './tpm/' + str(id)+ os.path.splitext(upload.filename)[1])
+    
+    pathtofile='./tpm'+ str(id) + os.path.splitext(upload.filename)[1]
     print(pathtofile)
-    path = img_treatment('./tpm/'+ upload.filename)
+    path = img_treatment('./tpm/'+ str(id)+ os.path.splitext(upload.filename)[1])
     print(path)
     return template(image_send, source ='path/response.jpg')
     
